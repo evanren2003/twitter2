@@ -1,0 +1,55 @@
+<!--basic html template for displaying some amount of posts-->
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<style>
+img {
+  float: left;
+}
+</style>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'twitterapp/style.css' %}">
+
+<div class="header">
+  <!--uses the style.css to create a twotter header-->
+  <h1>twotter</h1>
+</div>
+
+<br>
+
+<h1 style = "text-align: center;"> {{username}}'s POSTS </h1>
+
+<div class = "container"> <!--temporary set up to display a post-->
+  {% for post in list %}
+  <!--i still need to make it look nicer + have boxes since i was busy with resolving errors in other parts-->
+    <div class = "row" style="border:5px solid #cecece; margin-bottom:5px;">
+        <div class = "col-md-1">
+          <img src="{% static 'twitterapp/images/profilepic1.jpg' %}" height="86" width="120" hspace = "10" alt = "profilepic1">
+          <!--i used a preset profile picture for now (in the static file) while i was resolving other issues, i will make this
+          change accorind gto user later-->
+        </div>
+        <div class="col-md-11">
+
+          <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong>
+
+          <p>{{post.tweet_text}}</p>
+
+          <b>{{post.pub_date}}</b>
+
+        </div>
+    </div>
+    <br>
+  {% endfor %}
+</div>
+
+</html>

@@ -1,0 +1,13 @@
+/* body {
+    /* background: white url("images/background.gif") no-repeat; */
+/* } */
+
+.header { /*this creates the "twotter" header at the top of each page*/
+  /*for some reason on my computer the page is not including changes i make here
+  maybe thats just my computer, or maybe another issue i have to fix */
+  padding: 5px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}

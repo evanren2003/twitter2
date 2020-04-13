@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Twotter</title>
+
+    <!-- This section (4 items) includes Bootstrap 4 -->
+      <!-- Latest compiled and minified CSS -->
+      <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+      does the above make a style sheet, if so i want to customize ??-->
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  </head>
+
+  {% load static %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'twitterapp/style.css' %}">
+
+  <div class="header">
+    <h1>twotter</h1>
+  </div>
+
+    <div class="container">
+      <h1>Welcome to Twotter!</h1>
+
+      {% if loggedIn %}
+
+        <h3>Welcome, {{ user.first_name }} {{ user.last_name }}</h3>
+
+        <form style="padding-bottom:1em;" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="logout" value="logout"></input>
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+
+      {% else %}
+
+        <form style="padding-bottom:1em;" method="POST">
+          {% csrf_token %}
+
+
+          <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input type="text" class="form-control" name="inputUsername" id="inputUsername" />
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" name="inputPassword" id="inputPassword" />
+          </div>
+
+          <button type="submit" class="btn btn-danger">Login</button>
+        </form>
+      {% endif %}
+
+      {% for post in allPosts %}
+      <!--start customizing the post look here-->
+      <!--compare to your detail dot html :o-->
+        <div class="row border border-dark">
+          <div class="col-3 text-primary">
+            <strong>
+              {{ post.firstName }} {{ post.lastName }}:
+            </strong>
+          </div>
+          <div class="col-5 text-dark">
+            {{ post.postText }}
+          </div>
+          <div class="col-2 text-success">
+            <small>{{ post.pubDate }}</small>
+          </div>
+          <div class="col-2 text-danger">
+            <small>❤ {{ post.likes }}</small>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html

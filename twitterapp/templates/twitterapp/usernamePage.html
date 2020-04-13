@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>{{username}}'s Twotter</title>
+
+    <!-- This section (4 items) includes Bootstrap 4 -->
+      <!-- Latest compiled and minified CSS -->
+      <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> -->
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+  </head>
+
+  {% load static %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'twitterapp/style.css' %}">
+
+  <div class="header">
+    <!--uses the style.css to create a twotter header-->
+    <h1>twotter</h1>
+  </div>
+
+
+  <!-- Again, light gray page background. -->
+    <!-- Bootstrap wants everything in some kind of container. -->
+    <div class="container">
+
+      <!-- I'm using a pagination nav from Bootstrap to switch views. -->
+      <nav>
+
+        <!-- I made it large, and centered left-to-right (see avatar below). -->
+        <ul class="pagination pagination-lg justify-content-center">
+
+          <!-- There are only two options, posts my this user only, -->
+          <li class="page-item">
+            <a class="page-link" href="">My Posts</a>
+          </li>
+
+          <!-- or posts by whoever this user follows. -->
+          <li class="page-item border-dark">
+            <a class="page-link" href="{% url 'followed' username %}">My Feed</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Thi section sets up a form where a user can make a new post. -->
+      <div class="row border border-dark">
+        <div class="col">
+          {% if user %}
+          <form action="{% url 'usernamepage' username %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <div class="col-8">
+                <label for="newPostText">Add a New Post!</label>
+                <textarea class="form-control" rows="4" name="newPostText"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-12">
+                <input type="hidden" name="userPosting" value="{{ username }}" />
+                <button type="submit" class="btn btn-success">Submit New Post</button>
+              </div>
+            </div>
+          </form>
+          {% else %}
+            <p>Log in to post.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if latestPosts %}
+        {% for post in latestPosts %}
+          <div class="row border border-dark">
+            <div class="d-flex col-1 align-items-center justify-content-center" align=center><img src="{% static 'posts/DrJAvatar.png' %}" height=50/></div>
+            <div class="col-11 font-weight-bold bg-warning text-primary">
+              {{ firstName }} {{ lastName }}
+              <div class="row">
+                <div class="col-1">&nbsp;</div>
+                <div class="col-11 font-weight-normal text-dark">{{ post.postText }}</div>
+              </div>
+              <div class="row">
+                <div class="col font-weight-normal text-success"><small>{{ post.pubDate }}</small></div>
+                <div class="col font-weight-normal text-danger">❤ {{ post.likes }}</div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="row">
+          <div class="col">Sorry, no posts available.</div>
+        </div>
+      {% endif %}
+    </div>
+  </body>
+</html

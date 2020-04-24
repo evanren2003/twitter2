@@ -25,6 +25,7 @@ class userProfile(models.Model):
 class TweetUser(models.Model):
     user = models.ForeignKey(User, unique=False, on_delete=models.CASCADE, default = 1)
     username = models.CharField(max_length = 50)
+    #how to set this username as the thing @_@
 
     def __str__(self):
         return self.username

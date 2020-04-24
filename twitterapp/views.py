@@ -17,7 +17,7 @@ import pprint
 def index(request): #code from the video
     if request.POST:
         if 'inputUsername' in request.POST.keys():
-            user = authenticate(username=request.POST['inputUsername'],password=request.Post['inputPassword'])
+            user = authenticate(username=request.POST['inputUsername'],password=request.POST['inputPassword'])
             if user is not None:
                 login(request,user)
         elif 'logout' in request.POST.keys():
@@ -43,8 +43,10 @@ def index(request): #code from the video
         print(vars(tweet))
         print()
 
-        # poster = User.objects.filter(username = tweet.user.username)[0]
-        poster = tweet.tweetuser.user
+        poster = User.objects.filter(username = tweet.tweetuser.user.username)[0]
+        print(vars(poster))
+        print()
+        # poster = tweet.tweetuser.user
         tweet.firstName = poster.first_name
         tweet.lastName = poster.last_name
 
@@ -54,7 +56,7 @@ def index(request): #code from the video
         'user': request.user,
     }
 
-    return HttpResponse(template.render(context.request))
+    return HttpResponse(template.render(context,request))
 
 def postView(request,id):
     #passes the tweet info into detail.html and which displays the tweet at http://localhost:8000/twitterapp/id
@@ -86,6 +88,8 @@ def feedView(request):
         return HttpResponse(template.render(context, request))
 
 #to do: modify the below view, and customize the pages (show likes)
+#to do: modify tweets so that people can add replies
+#to do: add profile picture to each user
 #@myself to do list is in the comment above
 #
 #
@@ -98,6 +102,7 @@ def feedView(request):
 #is it somehow calling userView?
 
 def userView(request, username):
+    print("running userView")
     #need to replace once auth.user is integrated
     #try this with actual user data and a different for loop
 

@@ -22,10 +22,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    #basic url setup, will include more pages for each user, to add a post, etc
-    path('', include ('twitterapp.urls')),
-    #"When I loaded up your server, I put in localhost:8000 and got a 404 page not found error. That root address should lead somewhere."
-    #hm i didn't change any of this but when i put in localhost:8000 it displayed a page with "Hello, world. You're at the twitterapp index." for me, weird
-    path('twitterapp/', include('twitterapp.urls')),
     path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
+    path('twitterapp/', include('twitterapp.urls')),
+    path('', include ('twitterapp.urls')),
 ]

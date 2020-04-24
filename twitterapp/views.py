@@ -29,10 +29,22 @@ def index(request): #code from the video
     loggedIn = request.user.is_authenticated #i think this works
 
     template = loader.get_template('twitterapp/index.html')
-    allTweets = Tweet.objects.order_by('-pubDate') #use this to edit your other view (timeline)
+    allTweets = Tweet.objects.order_by('-pub_date') #use this to edit your other view (timeline)
+
+    print(User.objects.all())
+    print()
+
+    for user in User.objects.all():
+        print(vars(user))
+    print()
 
     for tweet in allTweets:
-        poster = User.objects.filter(username = tweet.userPosted)[0]
+
+        print(vars(tweet))
+        print()
+
+        # poster = User.objects.filter(username = tweet.user.username)[0]
+        poster = tweet.tweetuser.user
         tweet.firstName = poster.first_name
         tweet.lastName = poster.last_name
 
@@ -82,18 +94,21 @@ def feedView(request):
 #
 # blank space for visibility
 
+#this is weird, http://localhost:8000/twitterapp takes me to "blank page" aka emptypage.html
+#is it somehow calling userView?
+
 def userView(request, username):
     #need to replace once auth.user is integrated
     #try this with actual user data and a different for loop
 
-    #replace with his code
+    #replace with other code
     tweetList = []
     listCounter = 0
     counter = 1
     while True:
         try:
             post = Tweet.objects.get(pk=counter)
-            if (str(post.user) == username): #just check if the strings are equal (error if two users have the same username?)
+            if (str(post.username) == username): #just check if the strings are equal (error if two users have the same username?)
                 tweetList.append(post)
                 listCounter += 1
             counter += 1

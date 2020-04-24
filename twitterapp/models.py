@@ -23,6 +23,7 @@ class userProfile(models.Model):
     avatar = models.ImageField(upload_to='twitterapp/images', validators=[validate_image]) #supposed to be profile picture field
 
 class TweetUser(models.Model):
+    user = models.ForeignKey(User, unique=False, on_delete=models.CASCADE, default = 1)
     username = models.CharField(max_length = 50)
 
     def __str__(self):
@@ -31,9 +32,10 @@ class TweetUser(models.Model):
 # https://stackoverflow.com/questions/44604405/django-uploading-image-using-builtin-user-model
 class Tweet(models.Model):
     #user = models.ForeignKey(TweetUser, on_delete=models.CASCADE, default = None, null=True, blank=True)
+    tweetuser = models.ForeignKey(TweetUser, unique=False, on_delete=models.CASCADE, default = 1)
 
     #fields for username, the text, and the publication date
-    username = models.CharField(max_length = 50)
+    username = models.CharField(max_length = 50) #what is this username for its tied to tweetuser
     tweet_text = models.CharField(max_length = 200)
     pub_date = models.DateTimeField('date published')
     likes = models.IntegerField(default=0)

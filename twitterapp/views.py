@@ -49,6 +49,7 @@ def index(request): #code from the video
         # poster = tweet.tweetuser.user
         tweet.firstName = poster.first_name
         tweet.lastName = poster.last_name
+        tweet.username = poster.username
 
     context = {
         'allTweets':allTweets,

@@ -23,6 +23,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'twitterapp/style.css' %}">
 
   <div class="header">
+    <!--why doesnt center text align work-->
     <h1>twotter</h1>
   </div>
 
@@ -86,9 +87,14 @@
           </div>
         </div> -->
 
+
+        <!--https://stackoverflow.com/questions/46906010/how-to-show-username-at-right-side-of-profile-photo-using-css-->
         <div class = "row" style="border:5px solid #cecece; margin-bottom:5px;">
-            <div class = "col-md-1">
+            <div class = "col-md-1" style = "display:flex; align-items: center;">
               <img src="{% static 'twitterapp/images/profilepic1.jpg' %}" height="86" width="120" hspace = "10" alt = "profilepic1">
+              <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong>
+              <br> </br> <!--bruh how do i make it go on a new line-->
+              <p style = "color:grey;"> @{{post.username}}</p>
               <!--make the profile picture changeable for each user-->
               <!--i used a preset profile picture for now (in the static file) while i was resolving other issues, i will make this
               change accorind gto user later-->
@@ -97,11 +103,13 @@
 
               <!--also edit the actual html-->
 
-              <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong>
+              <!-- <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong> -->
 
-              <p>{{post.tweet_text}}</p>
+              <p>
+              <b>{{post.tweet_text}}</b>
+              </p>
 
-              <b>{{post.pub_date}}</b>
+              <p>{{post.pub_date}}</p>
 
               <div class="col-2 text-danger">
                 <small>❤ {{ post.likes }}</small>

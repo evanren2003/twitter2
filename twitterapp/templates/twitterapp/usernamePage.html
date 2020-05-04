@@ -43,10 +43,7 @@
             <a class="page-link" href="">My Posts</a>
           </li>
 
-          <!-- or posts by whoever this user follows. -->
-          <li class="page-item border-dark">
-            <a class="page-link" href="{% url 'followed' username %}">My Feed</a>
-          </li>
+
         </ul>
       </nav>
 
@@ -54,7 +51,7 @@
       <div class="row border border-dark">
         <div class="col">
           {% if user %}
-          <form action="{% url 'usernamepage' username %}" method="POST">
+          <form action="{% url 'usernamePage' username %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
               <div class="col-8">
@@ -77,20 +74,35 @@
 
       {% if latestPosts %}
         {% for post in latestPosts %}
-          <div class="row border border-dark">
-            <div class="d-flex col-1 align-items-center justify-content-center" align=center><img src="{% static 'posts/DrJAvatar.png' %}" height=50/></div>
-            <div class="col-11 font-weight-bold bg-warning text-primary">
-              {{ firstName }} {{ lastName }}
-              <div class="row">
-                <div class="col-1">&nbsp;</div>
-                <div class="col-11 font-weight-normal text-dark">{{ post.tweet_text }}</div>
-              </div>
-              <div class="row">
-                <div class="col font-weight-normal text-success"><small>{{ post.pub_date }}</small></div>
-                <div class="col font-weight-normal text-danger">❤ {{ post.likes }}</div>
-              </div>
+        <div class = "row" style="border:2px solid #cecece; margin-bottom:2px;">
+            <div class = "col-md-1" style = "display:flex; align-items: center;">
+              <!--customizable pfp?-->
+              <img src="{% static 'twitterapp/images/profilepic1.jpg' %}" height="86" width="120" hspace = "5" alt = "profilepic1">
+              <strong style = "color:blue; margin-right:6px;"> {{firstName}} {{lastName}} </strong>
+               <!--bruh how do i make it go on a new line-->
+              <p style = "color:grey;"> @{{post.username}}</p>
+              <!--make the profile picture changeable for each user-->
+              <!--i used a preset profile picture for now (in the static file) while i was resolving other issues, i will make this
+              change accorind gto user later-->
             </div>
-          </div>
+            <div class="col-md-11">
+
+              <!--also edit the actual html-->
+
+              <!-- <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong> -->
+
+              <p>
+              <b class="postText" style="font-size:24px;">{{post.tweet_text}}</b>
+              </p>
+
+              <p style="font-size:12px;">{{post.pub_date}}</p>
+
+              <div class="col-2 text-danger postText">
+                <small>❤ {{ post.likes }}</small>
+              </div>
+
+            </div>
+        </div>
         {% endfor %}
       {% else %}
         <div class="row">

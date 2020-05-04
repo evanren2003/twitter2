@@ -89,11 +89,12 @@
 
 
         <!--https://stackoverflow.com/questions/46906010/how-to-show-username-at-right-side-of-profile-photo-using-css-->
-        <div class = "row" style="border:5px solid #cecece; margin-bottom:5px;">
+        <div class = "row" style="border:2px solid #cecece; margin-bottom:2px;">
             <div class = "col-md-1" style = "display:flex; align-items: center;">
-              <img src="{% static 'twitterapp/images/profilepic1.jpg' %}" height="86" width="120" hspace = "10" alt = "profilepic1">
-              <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong>
-              <br> </br> <!--bruh how do i make it go on a new line-->
+              <!--customizable pfp?-->
+              <img src="{% static 'twitterapp/images/profilepic1.jpg' %}" height="86" width="120" hspace = "5" alt = "profilepic1">
+              <strong style = "color:blue; margin-right:6px;"> {{post.firstName}} {{post.lastName}} </strong>
+               <!--bruh how do i make it go on a new line-->
               <p style = "color:grey;"> @{{post.username}}</p>
               <!--make the profile picture changeable for each user-->
               <!--i used a preset profile picture for now (in the static file) while i was resolving other issues, i will make this
@@ -106,18 +107,17 @@
               <!-- <strong style = "color:blue;"> {{post.firstName}} {{post.lastName}} </strong> -->
 
               <p>
-              <b>{{post.tweet_text}}</b>
+              <b class="postText" style="font-size:24px;">{{post.tweet_text}}</b>
               </p>
 
-              <p>{{post.pub_date}}</p>
+              <p style="font-size:12px;">{{post.pub_date}}</p>
 
-              <div class="col-2 text-danger">
+              <div class="col-2 text-danger postText">
                 <small>❤ {{ post.likes }}</small>
               </div>
 
             </div>
         </div>
-        <br>
       {% endfor %}
     </div>
   </body>

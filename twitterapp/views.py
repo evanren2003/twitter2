@@ -31,21 +31,21 @@ def index(request): #code from the video
     template = loader.get_template('twitterapp/index.html')
     allTweets = Tweet.objects.order_by('-pub_date') #use this to edit your other view (timeline)
 
-    print(User.objects.all())
-    print()
-
-    for user in User.objects.all():
-        print(vars(user))
-    print()
+    # print(User.objects.all())
+    # print()
+    #
+    # for user in User.objects.all():
+    #     print(vars(user))
+    # print()
 
     for tweet in allTweets:
 
-        print(vars(tweet))
-        print()
+        # print(vars(tweet))
+        # print()
 
         poster = User.objects.filter(username = tweet.tweetuser.user.username)[0]
-        print(vars(poster))
-        print()
+        # print(vars(poster))
+        # print()
         # poster = tweet.tweetuser.user
         tweet.firstName = poster.first_name
         tweet.lastName = poster.last_name
@@ -113,9 +113,13 @@ def userView(request, username):
     counter = 1
     while True:
         try:
-            post = Tweet.objects.get(pk=counter)
-            if (str(post.username) == username): #just check if the strings are equal (error if two users have the same username?)
-                tweetList.append(post)
+            tweet = Tweet.objects.get(pk=counter)
+            poster = User.objects.filter(username = tweet.tweetuser.user.username)[0]
+            tweet.firstName = poster.first_name
+            tweet.lastName = poster.last_name
+            tweet.username = poster.username
+            if (str(tweet.username) == username): #just check if the strings are equal (error if two users have the same username?)
+                tweetList.append(tweet)
                 listCounter += 1
             counter += 1
         except Tweet.DoesNotExist:
@@ -134,7 +138,7 @@ def usernameView(request, username):
             )
         newTweet.save()
     try:
-        userInfo = User.objects.filter(username=username)[0]
+        userInfo = User.objects.filter(username= username)[0]
     except:
         template = loader.get_template('posts/emptyusername.html')
         context = {
@@ -142,9 +146,9 @@ def usernameView(request, username):
             }
         return HttpResponse(template.render(context, request))
 
-    myTweets = Tweet.objects.filter(userPosted = username)
+    myTweets = Tweet.objects.filter(username = username)
     latestTweets = myTweets.order_by('-pubDate')[:5]
-    template = loader.get_template('posts/usernamePage.html')
+    template = loader.get_template('twitterapp/usernamePage.html')
     context = {
         'latestPosts': latestTweets,
         'username': userInfo.username,

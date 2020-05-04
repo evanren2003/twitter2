@@ -18,4 +18,5 @@ urlpatterns = [
 
     path('<username>', views.userView, name = 'userView'), #link to all the posts for one user
     path('<username>/', views.userView, name = 'userView'),
+    #usernamePage.html is not debugged yet
 ]
